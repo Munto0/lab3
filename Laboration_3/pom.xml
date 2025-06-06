@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!-- Define the parent POM -->
+    <parent>
+        <artifactId>assignments</artifactId>
+        <groupId>com.dt180g</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Project artifact ID -->
+    <artifactId>Laboration_3</artifactId>
+    <!-- Project packaging type -->
+    <packaging>jar</packaging>
+    <!-- Project name -->
+    <name>Laboration 3</name>
+    <!-- Project URL -->
+    <url>${project.artifactId}</url>
+    <!-- Project description -->
+    <description>
+        The third lab assignment regards an implementation of the classic Towers of
+        Hanoi, utilizing both Command and Singleton Design Patterns.
+    </description>
+
+    <!-- Reporting plugins configuration -->
+    <reporting>
+        <plugins>
+            <!-- JavaDoc plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+            </plugin>
+            <!-- Surefire report plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </reporting>
+
+    <!-- Stating path to JavaDoc output, so that pages link correctly -->
+    <distributionManagement>
+        <site>
+            <id>${project.artifactId}-site</id>
+            <url>file://${project.parent.artifactId}/${project.artifactId}/target/site/</url>
+        </site>
+    </distributionManagement>
+
+    <!-- Build configuration -->
+    <build>
+        <plugins>
+            <plugin>
+                <!-- Build an executable JAR -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <!-- Add classpath to the manifest -->
+                            <addClasspath>true</addClasspath>
+                            <!-- Set classpath prefix -->
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <!-- Set main class for the executable JAR -->
+                            <mainClass>com.dt180g.laboration_3.Lab3</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
