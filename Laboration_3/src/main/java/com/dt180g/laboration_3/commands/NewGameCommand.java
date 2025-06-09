@@ -1,9 +1,7 @@
 package com.dt180g.laboration_3.commands;
-
 import com.dt180g.laboration_3.receiver.HanoiEngine;
 import com.dt180g.laboration_3.support.HanoiLogger;
 import com.dt180g.laboration_3.support.AppConfig;
-
 /**
  * NewGameCommand initializes or restarts a Towers of Hanoi game with a specified number of discs.
  * It ensures the disc count is within the  limits, resets
@@ -11,10 +9,8 @@ import com.dt180g.laboration_3.support.AppConfig;
  *
  * @author Muntaser Ibrahim
  */
-
 public class NewGameCommand implements CommandInterface {
     private final int discs;
-
     /**
      * Constructs a NewGameCommand with the  disc count.
      *
@@ -23,7 +19,6 @@ public class NewGameCommand implements CommandInterface {
     public NewGameCommand(int discs) {
         this.discs = discs;
     }
-
     /**
      * Executes the new game command , resetting the game engine, resetting the logger
      * and logging the starting disc count.
