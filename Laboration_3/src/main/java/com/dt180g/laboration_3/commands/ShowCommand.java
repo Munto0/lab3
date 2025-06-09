@@ -1,7 +1,5 @@
 package com.dt180g.laboration_3.commands;
-
 import com.dt180g.laboration_3.receiver.HanoiEngine;
-
 /**
  * Concrete command, used to show current game state.
  * The command will trigger {@link HanoiEngine#showGameStateASCII()}, which in
@@ -12,7 +10,6 @@ import com.dt180g.laboration_3.receiver.HanoiEngine;
 public class ShowCommand implements CommandInterface {
     /** Default constructor for show command. */
     public ShowCommand() { }
-
     /** {@inheritDoc} */
     @Override public void execute() {
         HanoiEngine.INSTANCE.showGameStateASCII();
