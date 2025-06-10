@@ -1,5 +1,4 @@
 package com.dt180g.laboration_3.issuers;
-
 import com.dt180g.laboration_3.receiver.HanoiEngine;
 import com.dt180g.laboration_3.invoker.CommandManager;
 import com.dt180g.laboration_3.commands.MoveCommand;
@@ -8,7 +7,6 @@ import com.dt180g.laboration_3.commands.ShowCommand;
 import com.dt180g.laboration_3.support.AppConfig;
 import com.dt180g.laboration_3.support.HanoiLogger;
 import com.dt180g.laboration_3.validation.InvalidInputException;
-
 import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.InputMismatchException;
@@ -16,7 +14,6 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
 /**
  * The main command issuer for the game, and responsible for user interactions.
  * Provides a user interface through menu options, handles user input and issues
@@ -27,31 +24,24 @@ import java.util.stream.Stream;
 public class GameRunner {
     // our standard input stream
     private final Scanner in = new Scanner(System.in);
-
     // our standard output stream
     private final PrintStream out = System.out;
-
     // the menu options for user navigation
     private enum MenuOption {
         MOVE(1, "Perform Move"), UNDO(2, "Undo Move"), REDO(3, "Redo Move"),
         NEW_GAME(4, "New Game"), EXIT(0, "Exit");
-
         private final int value;
         private final String label;
-
         MenuOption(final int value, final String label) {
             this.value = value;
             this.label = label;
         }
-
         public int getValue() {
             return value;
         }
-
         public String getLabel() {
             return label;
         }
-
         public static MenuOption getByValue(final int value) {
             return Arrays.stream(MenuOption.values())
                     .filter(option -> option.getValue() == value)
@@ -59,7 +49,6 @@ public class GameRunner {
                     .orElseThrow(() -> new IllegalArgumentException("Invalid menu option value: " + value));
         }
     }
-
     /**
      * Creates a new object instance and configures the {@link HanoiEngine}.
      * If the {@link HanoiEngine} has a completed game, a new instance of
@@ -71,7 +60,6 @@ public class GameRunner {
             CommandManager.INSTANCE.executeCommand(new NewGameCommand(queryDiscAmount()));
         }
     }
-
     /**
      * Prompts the user to input the desired number of discs for the game and returns the input.
      * The input is validated to ensure that it is within the range of allowed values.
@@ -82,10 +70,8 @@ public class GameRunner {
         out.printf("%sState amount of discs [%d..%d]%s%n",
                 AppConfig.COLOR_INPUT, AppConfig.DISC_AMOUNT_MINIMUM,
                 AppConfig.DISC_AMOUNT_MAXIMUM, AppConfig.COLOR_RESET);
-
         return getInput(AppConfig.DISC_AMOUNT_MINIMUM, AppConfig.DISC_AMOUNT_MAXIMUM);
     }
-
     /**
      * Support method to handle and validate numeric inputs.
      *
@@ -111,7 +97,6 @@ public class GameRunner {
         }
         return input;
     }
-
     /**
      * Support method used to querying the user for move details.
      *
@@ -126,14 +111,12 @@ public class GameRunner {
                 })
                 .collect(Collectors.toList());
     }
-
     /** Closes the streams to associated resources. */
     private void closeStreams() {
         in.close();
         out.close();
         HanoiLogger.getInstance().closeLogger();
     }
-
     /**
      * Prints a list of menu options to the console, surrounded by horizontal lines.
      * Each menu option is represented by a label and a numeric value, which are centered
@@ -143,33 +126,26 @@ public class GameRunner {
      */
     private void printOptionItems(final List<MenuOption> options) {
         final String menuColor = AppConfig.COLOR_MENU;
-
         String output = options.stream()
                 .map(option -> String.format("%s%d%s%s%s",
                         menuColor, option.getValue(), ". ", option.getLabel(), AppConfig.COLOR_RESET))
                 .collect(Collectors.joining(" | "));
-
         final int lineOffset = -20;
         String line = "─".repeat(output.replace(" ", "").length() + lineOffset);
         out.printf("%s%n    %s%n%s%n", line, output, line);
     }
-
     /**
      * Main game simulation, which only ends either when game has been completed
      * or explicitly requested by the user.
      */
     public void runGame() {
         out.printf("%n%s%s%s", AppConfig.COLOR_BANNER, AppConfig.GAME_BANNER, AppConfig.COLOR_RESET);
-
         MenuOption[] options = MenuOption.values();
         MenuOption selectedOption;
-
         do {
             CommandManager.INSTANCE.executeCommand(new ShowCommand()); // print current game state
             printOptionItems(Arrays.asList(options));
-
             int input = getInput(0, options.length - 1); // get validated user input
-
             selectedOption = MenuOption.getByValue(input);
             switch (selectedOption) {
                 case MOVE -> {
@@ -187,10 +163,8 @@ public class GameRunner {
                 default -> throw new InvalidInputException("Invalid input.");
             }
         } while (!HanoiEngine.INSTANCE.isGameCompleted());
-
         CommandManager.INSTANCE.executeCommand(new ShowCommand()); // show final game state.
         out.printf("%n%s%s%s", AppConfig.COLOR_GAME_COMPLETE, AppConfig.GAME_COMPLETE, AppConfig.COLOR_RESET);
-
         // make sure open streams are closed.
         closeStreams();
     }
