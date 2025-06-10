@@ -1,10 +1,8 @@
 package com.dt180g.laboration_3.invoker;
-
 import com.dt180g.laboration_3.commands.*;
 import com.dt180g.laboration_3.validation.InvalidMoveException;
 import java.util.ArrayDeque;
 import java.util.Deque;
-
 /**
  * Singleton manager responsible for executing game commands, as well as undoing and redoing moves
  * in the Towers of Hanoi application. It maintains two stacks (undo and redo) of MoveCommand
@@ -15,15 +13,11 @@ import java.util.Deque;
  *
  * @author Muntaser Ibrahim
  */
-
 public class CommandManager {
     public static final CommandManager INSTANCE = new CommandManager();
-
     private final Deque<MoveCommand> undoStack = new ArrayDeque<>(),
             redoStack = new ArrayDeque<>();
-
     private CommandManager() { }
-
     /**
      * Used by NewGameCommand to reset history.
      */
@@ -31,7 +25,6 @@ public class CommandManager {
         undoStack.clear();
         redoStack.clear();
     }
-
     /**
      * NewGameCommand clears history. MoveCommand adds to undo stack and clears redo stack.
      * Invalid moves are caught and reported to console.
@@ -51,7 +44,6 @@ public class CommandManager {
             System.out.println(e.getMessage());
         }
     }
-
     public void undoMove() {
         if (!undoStack.isEmpty()) {
             MoveCommand m = undoStack.pop();
@@ -59,7 +51,6 @@ public class CommandManager {
             redoStack.push(m);
         }
     }
-
     public void redoMove() {
         if (!redoStack.isEmpty()) {
             MoveCommand m = redoStack.pop();
@@ -67,7 +58,6 @@ public class CommandManager {
             undoStack.push(m);
         }
     }
-
     /**
      * @return the number of moves currently available to undo and to redo
      */
